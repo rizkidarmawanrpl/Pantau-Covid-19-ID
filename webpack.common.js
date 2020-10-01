@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+var webpack = require('webpack');
 const path = require("path");
 
 module.exports = {
@@ -19,10 +20,25 @@ module.exports = {
                         loader: "css-loader"
                     }
                 ]
+            },
+
+            {
+                test: /\.(jpe?g|png|svg|gif)$/,
+                use: {
+                    loader: "file-loader",
+                    options: {
+                        name: "images/[name]-[hash].[ext]",
+                    },
+                },
             }
         ]
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        }),
+
         new HtmlWebpackPlugin({
             template: "./src/index.html",
             filename: "index.html"

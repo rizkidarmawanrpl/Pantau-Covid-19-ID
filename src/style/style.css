@@ -7,3 +7,10 @@ body {
 .bg-grey {
     background-color: #f7fafc;
 }
+
+#light-slider li > .card {
+    width: 315px;
+    height: 190px;
+    margin: 0 13px;
+    border-bottom: 5px solid #0a59ad;
+}
