@@ -1,3 +1,4 @@
+import dt from "datatables.net";
 
 const main = () => {
     $("#light-slider").lightSlider({
@@ -11,6 +12,8 @@ const main = () => {
             $('#autoWidth').removeClass('cS-hidden');
         }
     });
+
+    $('#table_id').DataTable();
 };
 
 export default main;
