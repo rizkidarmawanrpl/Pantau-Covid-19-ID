@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -15,20 +19,24 @@ body {
     border-bottom: 5px solid #0a59ad;
 }
 
-.app__about .tentang {
+#app__about .tentang {
     border-left: 5px solid #8BC34A;
 }
-.app__about .gejala {
+#app__about .gejala {
     border-bottom: 5px solid #FF9800;
 }
-.app__about .penularan {
+#app__about .penularan {
     border-bottom: 5px solid #F44336;
 }
 
-.app__statistik .statistik-terkonfirmasi .judul {
+#app__statistik .statistik-terkonfirmasi .judul {
     color: #84befd;
     font-weight: bold;
 }
-.app__statistik .statistik-terkonfirmasi svg {
+#app__statistik .statistik-terkonfirmasi svg {
     color: #84befd;
+}
+
+menu-list {
+    display: flex;
 }
