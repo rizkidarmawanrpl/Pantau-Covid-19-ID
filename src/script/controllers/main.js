@@ -4,7 +4,9 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import DataSettings from "../models/model-settings.js";
 import menus from "../models/model-menus";
-import prokes from "../models/model-prokes";
+import prokes from "../controllers/prokes";
+import tentang_covid from "../controllers/tentang-covid";
+import statistik from "../controllers/statistik";
 
 const main = () => {
     // Settings Data
@@ -13,19 +15,15 @@ const main = () => {
     $(".navbar-brand img").attr("src", DataSettings.logo);
     $(".navbar-brand span").append(DataSettings.name);
 
+    // Smoot scroll
     $(document).ready(function(){
-        // Add smooth scrolling to all links
         $(".nav-item a").on('click', function(event) {
-            // Make sure this.hash has a value before overriding default behavior
             if (this.hash !== "") {
-                // Prevent default anchor click behavior
                 event.preventDefault();
 
                 // Store hash
                 var hash = this.hash;
 
-                // Using jQuery's animate() method to add smooth page scroll
-                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
                 $('html, body').animate({
                     scrollTop: $(hash).offset().top - 80
                 }, 800, function(){
@@ -33,7 +31,7 @@ const main = () => {
                     // Add hash (#) to URL when done scrolling (default click behavior)
                     //window.location.hash = hash;
                 });
-            } // End if
+            }
 
             $("li.nav-item").removeClass("active");
             $(this).parent().addClass("active");
@@ -45,20 +43,21 @@ const main = () => {
     menuListElement.menus = menus;
 
     // get list protokol kesehatan
-    const prokesListElement = document.querySelector("prokes-list");
-    prokesListElement.prokesList = prokes;
+    prokes.getDataProkes();
 
-    $("#light-slider").lightSlider({
-        auto: true,
-        autoWidth: true,
-        loop: true,
-        pauseOnHover: true,
-        slideMargin: 35,
-        pause: 4000,
-        onSliderLoad: function() {
-            $('#autoWidth').removeClass('cS-hidden');
-        }
-    });
+    // get data mengenai covid 19
+    tentang_covid.getTentangCovid();
+
+    // get data statistik
+    statistik.getStatistik();
+
+    $("#table_id_body").append(`<tr>
+                            <td>3</td>
+                            <td>China</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                        </tr>`);
 
     $('#table_id').DataTable();
 

@@ -5,9 +5,9 @@ import "lightslider/dist/css/lightslider.css";
 import "bootstrap-icons/bootstrap-icons.svg";
 import "datatables.net-bs4";
 
-import "lightslider/dist/js/lightslider.js"
+import "bootstrap";
+import "lightslider/dist/js/lightslider.js";
 import "./script/components/menu-list.js";
-import "./script/components/prokes-list.js";
 import main from "./script/controllers/main.js";
 
 document.addEventListener("DOMContentLoaded", main);

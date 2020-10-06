@@ -37,6 +37,20 @@ body {
     color: #84befd;
 }
 
-menu-list {
-    display: flex;
+@media (min-width: 1024px) {
+    menu-list {
+        display: flex;
+    }
+}
+
+@media (max-width: 1024px) {
+    ul.navbar-nav {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    ul li:hover {
+        background-color: #f7fafc;
+        font-weight: bold;
+    }
 }
