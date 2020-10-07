@@ -25,19 +25,13 @@ class MenuList extends HTMLElement {
     }
 
     renderError(message) {
-        this.innerHTML  = `
-        <style>
-        .placeholder {
-            font-weight: lighter;
-            color: rgba(0,0,0,0.5);
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        </style>
-        `;
-        this.innerHTML += `<h2 class="placeholder">${message}</h2>`;
+        this.innerHTML += `<div class="row">
+                                <div class="col">
+                                    <div class="alert alert-warning mb-0" role="alert">
+                                        ${message}
+                                    </div>
+                                </div>
+                            </div>`;
     }
 }
 

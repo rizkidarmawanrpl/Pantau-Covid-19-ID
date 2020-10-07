@@ -8,7 +8,7 @@ class TentangCovid {
         const views = `
         <article class="card shadow-sm bg-white rounded mt-4 tentang">
             <div class="card-body">
-                <h5 class="card-title">Yang Harus Diketahui Tentang Covid19</h5>
+                <h5 class="card-title">Yang Harus Diketahui Tentang COVID-19</h5>
                 <p class="card-text text-justify">
                     ${DataTentangCovid.deskripsi}
                 </p>

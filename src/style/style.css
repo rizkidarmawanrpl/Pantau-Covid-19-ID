@@ -37,9 +37,17 @@ body {
     color: #84befd;
 }
 
+.dataTables_filter {
+    float: right;
+}
+
 @media (min-width: 1024px) {
     menu-list {
         display: flex;
+    }
+
+    .dataTables_paginate {
+        float: right;
     }
 }
 
@@ -52,5 +60,11 @@ body {
     ul li:hover {
         background-color: #f7fafc;
         font-weight: bold;
+    }
+}
+
+@media (max-width: 426px) {
+    .dataTables_filter {
+        float: left;
     }
 }

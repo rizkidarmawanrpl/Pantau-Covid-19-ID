@@ -1,5 +1,6 @@
 import icon_statistik from "../models/model-icon-statistik";
 import DataApiCovid from "../models/model-api-covid";
+import moment from "moment";
 
 class ApiCovid {
     constructor() {
@@ -159,7 +160,7 @@ class ApiCovid {
                                 views += `
                                 <tr>
                                     <td>${no}</td>
-                                    <td>${iso2.toLowerCase() +' - '+ iso3}</td>
+                                    <!--<td>${iso2.toLowerCase() +' - '+ iso3}</td>-->
                                     <td>${name}</td>
                                     <td>${n(countriesConfirmed)}</td>
                                     <td>${n(countriesRecovered)}</td>
@@ -182,6 +183,53 @@ class ApiCovid {
 
                 return "";
             }
+        };
+
+        return api();
+    }
+
+    static getGlobalCovidUpdates() {
+        moment.locale("id");
+        const tahunIni = moment().format("YYYY");
+        const bulanIni = moment().format("M");
+
+        const getTanggalAkhir = (tahun, bulan) => {
+            let endDate;
+            if(bulanIni == bulan) {
+                endDate = moment().subtract(1, 'day').format("MM-DD-YYYY");
+
+            } else {
+
+                const startDate = moment([tahun, bulan - 1, 1]).format("YYYY-MM-DD");
+                const daysInMonth = moment(startDate).daysInMonth();
+                endDate = moment(startDate).add(daysInMonth - 1, 'days').format("MM-DD-YYYY");
+            }
+
+            return endDate;
+        };
+
+        const api = async () => {
+            let data = [];
+
+            for(let i = 1; i <= bulanIni; i++) {
+                const tanggalAkhir = getTanggalAkhir(tahunIni, i);
+                let confirmed = 0;
+
+                try {
+                    const covidDaily = await DataApiCovid.getDailyUpdates(tanggalAkhir);
+                    for(const item of covidDaily) {
+                        confirmed += parseInt(item.confirmed);
+                    }
+
+                } catch(message) {
+                }
+
+                const obj = { "date": tanggalAkhir, "value": confirmed };
+
+                data = data.concat(obj);
+            }
+
+            return data;
         };
 
         return api();

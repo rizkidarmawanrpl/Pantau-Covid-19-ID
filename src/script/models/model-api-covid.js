@@ -45,6 +45,12 @@ class ApiCovid {
 
         return this.getApi(route);
     }
+
+    static getDailyUpdates(date) {
+        const route = `${routes.daily}/${date}`;
+
+        return this.getApi(route);
+    }
 }
 
 export default ApiCovid;

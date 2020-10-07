@@ -8,7 +8,7 @@ const menus = [
         link: "#app__protokol"
     },
     {
-        name: "Tentang COVID 19",
+        name: "Tentang COVID-19",
         link: "#app__about"
     },
     {

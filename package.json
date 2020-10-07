@@ -32,6 +32,8 @@
     "datatables.net-bs4": "^1.10.22",
     "jquery": "^3.5.1",
     "lightslider": "^1.1.6",
+    "moment": "^2.29.1",
+    "placeholder-loading": "^0.2.6",
     "popper.js": "^1.16.1",
     "regenerator-runtime": "^0.13.7"
   }
