@@ -18,7 +18,7 @@ class ApiCovid {
                 return response.json();
             })
             .then(responseJSON => {
-                if(responseJSON.confirmed || responseJSON[0]) {
+                if(responseJSON.confirmed || responseJSON[0] || responseJSON.countries) {
                     return Promise.resolve(responseJSON);
                 } else {
                     return Promise.reject("Data tidak ditemukan..");
@@ -36,6 +36,12 @@ class ApiCovid {
         if(status !== "") {
             route += "/" + status;
         }
+
+        return this.getApi(route);
+    }
+
+    static getCountriesAll() {
+        const route = `${routes.countries}`;
 
         return this.getApi(route);
     }

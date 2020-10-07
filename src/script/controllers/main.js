@@ -6,7 +6,7 @@ import DataSettings from "../models/model-settings.js";
 import menus from "../models/model-menus";
 import prokes from "../controllers/prokes";
 import tentang_covid from "../controllers/tentang-covid";
-import statistik from "../controllers/statistik";
+import api_covid from "./api-covid";
 
 const main = () => {
     // Settings Data
@@ -49,17 +49,14 @@ const main = () => {
     tentang_covid.getTentangCovid();
 
     // get data statistik
-    statistik.getStatistik();
+    api_covid.getStatistik();
 
-    $("#table_id_body").append(`<tr>
-                            <td>3</td>
-                            <td>China</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                        </tr>`);
+    // get data covid di semua negara
+    api_covid.getCountriesCovid().then(response => {
+        $("#table_id_body").append(response);
+        $('#table_id').DataTable();
+    });
 
-    $('#table_id').DataTable();
 
     am4core.ready(function() {
 
