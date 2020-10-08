@@ -69,27 +69,23 @@ const main = () => {
             am4core.useTheme(am4themes_animated);
             // Themes end
 
+            // Grafik kasus covid 19 per bulan global
             // Create chart instance
-            var chart = am4core.create("kasus_covid_perbulan", am4charts.XYChart);
-
+            var chartKasusCovidPerbulan = am4core.create("kasus_covid_perbulan", am4charts.XYChart);
             // Add data
-            chart.data = response;
-
+            chartKasusCovidPerbulan.data = response.global;
             // Set input format for the dates
-            chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
-
+            chartKasusCovidPerbulan.dateFormatter.inputDateFormat = "MM-dd-yyyy";
             // Create axes
-            var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
+            var dateAxis = chartKasusCovidPerbulan.xAxes.push(new am4charts.DateAxis());
+            var valueAxis = chartKasusCovidPerbulan.yAxes.push(new am4charts.ValueAxis());
             // Create series
-            var series = chart.series.push(new am4charts.LineSeries());
+            var series = chartKasusCovidPerbulan.series.push(new am4charts.LineSeries());
             series.dataFields.valueY = "value";
             series.dataFields.dateX = "date";
-            series.tooltipText = "{value}"
+            series.tooltipText = "{value}";
             series.strokeWidth = 2;
             series.minBulletDistance = 15;
-
             // Drop-shaped tooltips
             series.tooltip.background.cornerRadius = 20;
             series.tooltip.background.strokeOpacity = 0;
@@ -98,40 +94,81 @@ const main = () => {
             series.tooltip.label.minHeight = 40;
             series.tooltip.label.textAlign = "middle";
             series.tooltip.label.textValign = "middle";
-
             // Make bullets grow on hover
             var bullet = series.bullets.push(new am4charts.CircleBullet());
             bullet.circle.strokeWidth = 2;
             bullet.circle.radius = 4;
             bullet.circle.fill = am4core.color("#fff");
-
             var bullethover = bullet.states.create("hover");
             bullethover.properties.scale = 1.3;
-
             // Make a panning cursor
-            chart.cursor = new am4charts.XYCursor();
-            chart.cursor.behavior = "panXY";
-            chart.cursor.xAxis = dateAxis;
-            chart.cursor.snapToSeries = series;
-
+            chartKasusCovidPerbulan.cursor = new am4charts.XYCursor();
+            chartKasusCovidPerbulan.cursor.behavior = "panXY";
+            chartKasusCovidPerbulan.cursor.xAxis = dateAxis;
+            chartKasusCovidPerbulan.cursor.snapToSeries = series;
             // Create vertical scrollbar and place it before the value axis
-            chart.scrollbarY = new am4core.Scrollbar();
-            chart.scrollbarY.parent = chart.leftAxesContainer;
-            chart.scrollbarY.toBack();
-
+            chartKasusCovidPerbulan.scrollbarY = new am4core.Scrollbar();
+            chartKasusCovidPerbulan.scrollbarY.parent = chartKasusCovidPerbulan.leftAxesContainer;
+            chartKasusCovidPerbulan.scrollbarY.toBack();
             // Create a horizontal scrollbar with previe and place it underneath the date axis
-            chart.scrollbarX = new am4charts.XYChartScrollbar();
-            chart.scrollbarX.series.push(series);
-            chart.scrollbarX.parent = chart.bottomAxesContainer;
-
+            chartKasusCovidPerbulan.scrollbarX = new am4charts.XYChartScrollbar();
+            chartKasusCovidPerbulan.scrollbarX.series.push(series);
+            chartKasusCovidPerbulan.scrollbarX.parent = chartKasusCovidPerbulan.bottomAxesContainer;
             dateAxis.start = 0;
             dateAxis.keepSelection = true;
+            dateAxis.renderer.minGridDistance = 30;
+
+            // Grafik kasus covid 19 per bulan di Indonesia
+            // Create chart instance
+            var chartKasusCovidPerbulanIndonesia = am4core.create("kasus_covid_perbulan_indonesia", am4charts.XYChart);
+            // Add data
+            chartKasusCovidPerbulanIndonesia.data = response.indonesia;
+            // Set input format for the dates
+            chartKasusCovidPerbulanIndonesia.dateFormatter.inputDateFormat = "MM-dd-yyyy";
+            // Create axes
+            var dateAxis = chartKasusCovidPerbulanIndonesia.xAxes.push(new am4charts.DateAxis());
+            var valueAxis = chartKasusCovidPerbulanIndonesia.yAxes.push(new am4charts.ValueAxis());
+            // Create series
+            var series = chartKasusCovidPerbulanIndonesia.series.push(new am4charts.LineSeries());
+            series.dataFields.valueY = "value";
+            series.dataFields.dateX = "date";
+            series.tooltipText = "{value}";
+            series.strokeWidth = 2;
+            series.minBulletDistance = 15;
+            // Drop-shaped tooltips
+            series.tooltip.background.cornerRadius = 20;
+            series.tooltip.background.strokeOpacity = 0;
+            series.tooltip.pointerOrientation = "vertical";
+            series.tooltip.label.minWidth = 40;
+            series.tooltip.label.minHeight = 40;
+            series.tooltip.label.textAlign = "middle";
+            series.tooltip.label.textValign = "middle";
+            // Make bullets grow on hover
+            var bullet = series.bullets.push(new am4charts.CircleBullet());
+            bullet.circle.strokeWidth = 2;
+            bullet.circle.radius = 4;
+            bullet.circle.fill = am4core.color("#fff");
+            var bullethover = bullet.states.create("hover");
+            bullethover.properties.scale = 1.3;
+            // Make a panning cursor
+            chartKasusCovidPerbulanIndonesia.cursor = new am4charts.XYCursor();
+            chartKasusCovidPerbulanIndonesia.cursor.behavior = "panXY";
+            chartKasusCovidPerbulanIndonesia.cursor.xAxis = dateAxis;
+            chartKasusCovidPerbulanIndonesia.cursor.snapToSeries = series;
+            // Create vertical scrollbar and place it before the value axis
+            chartKasusCovidPerbulanIndonesia.scrollbarY = new am4core.Scrollbar();
+            chartKasusCovidPerbulanIndonesia.scrollbarY.parent = chartKasusCovidPerbulanIndonesia.leftAxesContainer;
+            chartKasusCovidPerbulanIndonesia.scrollbarY.toBack();
+            // Create a horizontal scrollbar with previe and place it underneath the date axis
+            chartKasusCovidPerbulanIndonesia.scrollbarX = new am4charts.XYChartScrollbar();
+            chartKasusCovidPerbulanIndonesia.scrollbarX.series.push(series);
+            chartKasusCovidPerbulanIndonesia.scrollbarX.parent = chartKasusCovidPerbulanIndonesia.bottomAxesContainer;
+            dateAxis.start = 0;
+            dateAxis.keepSelection = true;
+            dateAxis.renderer.minGridDistance = 30;
         }); // end am4core.ready()
     });
 
 };
 
 export default main;
-
-// Date updates api
-// Kasih warna berbeda antara value indonesia and global di statistik

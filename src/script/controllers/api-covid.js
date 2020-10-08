@@ -1,6 +1,7 @@
 import icon_statistik from "../models/model-icon-statistik";
 import DataApiCovid from "../models/model-api-covid";
 import moment from "moment";
+moment.locale("id");
 
 class ApiCovid {
     constructor() {
@@ -24,20 +25,20 @@ class ApiCovid {
         <div class="col">
             <div class="card shadow-sm ${clsBg} rounded" ${clsAdd}>
                 <div class="d-flex align-items-center h-100">
-                    <div class="card-body ${clsName}">
+                    <div class="card-body ${data.class}">
                         <h5 class="card-title text-center judul">${data.judul}</h5>
                         <div class="row">
                             <div class="col">
                                 <p class="text-center font-weight-bold">${data.countries}</p>
-                                <h5 class="text-center font-weight-bold">${n(data.value.countries)}</h5>
-                                <p class="text-center mb-0">
+                                <h5 class="text-center font-weight-bold statistik-value">${n(data.value.countries)}</h5>
+                                <p class="text-center mb-0 statistik-icon">
                                     ${data.icon}
                                 </p>
                             </div>
                             <div class="col">
                                 <p class="text-center font-weight-bold">Global</p>
-                                <h5 class="text-center font-weight-bold">${n(data.value.global)}</h5>
-                                <p class="text-center mb-0">
+                                <h5 class="text-center font-weight-bold statistik-value">${n(data.value.global)}</h5>
+                                <p class="text-center mb-0 statistik-icon">
                                     ${data.icon}
                                 </p>
                             </div>
@@ -65,12 +66,14 @@ class ApiCovid {
                 const globalConfirmed = resultGlobal.confirmed.value;
                 const globalRecovered = resultGlobal.recovered.value;
                 const globalDeaths = resultGlobal.deaths.value;
+                const lastUpdate = resultGlobal.lastUpdate;
 
                 // get data terkonfirmasi
                 const dataTerkonfirmasi = {
                     judul: "Total Terkonfirmasi",
                     countries: countries,
                     icon: icon_statistik.terkonfirmasi,
+                    class: "statistik-terkonfirmasi",
                     value: { countries: countriesConfirmed, global: globalConfirmed }
                 };
 
@@ -81,14 +84,16 @@ class ApiCovid {
                     judul: "Dalam Perawatan",
                     countries: countries,
                     icon: icon_statistik.perawatan,
+                    class: "statistik-perawatan",
                     value: { countries: perawatancountries, global: perawatanGlobal }
                 };
 
                 // get data sembuh
                 const dataSembuh = {
-                    judul: "Total Sembuh",
+                    judul: "Pasien Sembuh",
                     countries: countries,
                     icon: icon_statistik.sembuh,
+                    class: "statistik-sembuh",
                     value: { countries: countriesRecovered, global: globalRecovered }
                 };
 
@@ -97,6 +102,7 @@ class ApiCovid {
                     judul: "Pasien Meninggal",
                     countries: countries,
                     icon: icon_statistik.meninggal,
+                    class: "statistik-meninggal",
                     value: { countries: countriesDeaths, global: globalDeaths }
                 };
 
@@ -115,6 +121,7 @@ class ApiCovid {
                 `;
 
                 el.append(views);
+                $("#last_update_covid").append(`Update Terakhir : ${moment(lastUpdate).format("LLLL")}`);
 
             } catch(message) {
                 const views = `
@@ -189,7 +196,6 @@ class ApiCovid {
     }
 
     static getGlobalCovidUpdates() {
-        moment.locale("id");
         const tahunIni = moment().format("YYYY");
         const bulanIni = moment().format("M");
 
@@ -209,27 +215,53 @@ class ApiCovid {
         };
 
         const api = async () => {
-            let data = [];
+            const countryRegion = "Indonesia";
+            let dataOnGlobal = [];
+            let dataOnIndonesia = [];
 
             for(let i = 1; i <= bulanIni; i++) {
-                const tanggalAkhir = getTanggalAkhir(tahunIni, i);
+                let tanggalAkhir = getTanggalAkhir(tahunIni, i);
                 let confirmed = 0;
+                let confirmedIndonesia = 0;
 
                 try {
                     const covidDaily = await DataApiCovid.getDailyUpdates(tanggalAkhir);
                     for(const item of covidDaily) {
                         confirmed += parseInt(item.confirmed);
+
+                        // cek hanya untuk data Indonesia
+                        if(item.countryRegion === countryRegion) {
+                            confirmedIndonesia += parseInt(item.confirmed);
+                        }
                     }
 
                 } catch(message) {
+
+                    try {
+                        tanggalAkhir = moment().subtract(2, 'day').format("MM-DD-YYYY");
+
+                        const covidDaily = await DataApiCovid.getDailyUpdates(tanggalAkhir);
+                        for(const item of covidDaily) {
+                            confirmed += parseInt(item.confirmed);
+
+                            // cek hanya untuk data Indonesia
+                            if(item.countryRegion === countryRegion) {
+                                confirmedIndonesia += parseInt(item.confirmed);
+                            }
+                        }
+
+                    } catch(message) {
+                    }
                 }
 
                 const obj = { "date": tanggalAkhir, "value": confirmed };
+                const objIndonesia = { "date": tanggalAkhir, "value": confirmedIndonesia };
 
-                data = data.concat(obj);
+                dataOnGlobal = dataOnGlobal.concat(obj);
+                dataOnIndonesia = dataOnIndonesia.concat(objIndonesia);
             }
 
-            return data;
+            return { global: dataOnGlobal, indonesia: dataOnIndonesia };
         };
 
         return api();
