@@ -22,7 +22,7 @@ class ApiCovid {
         }
 
         const views = `
-        <div class="col">
+        <div class="col-md-3">
             <div class="card shadow-sm ${clsBg} rounded" ${clsAdd}>
                 <div class="d-flex align-items-center h-100">
                     <div class="card-body ${data.class}">
@@ -169,9 +169,9 @@ class ApiCovid {
                                     <td>${no}</td>
                                     <!--<td>${iso2.toLowerCase() +' - '+ iso3}</td>-->
                                     <td>${name}</td>
-                                    <td>${n(countriesConfirmed)}</td>
-                                    <td>${n(countriesRecovered)}</td>
-                                    <td>${n(countriesDeaths)}</td>
+                                    <td class="text-center font-weight-bold" style="font-size: 14px;">${n(countriesConfirmed)}</td>
+                                    <td class="text-center font-weight-bold" style="font-size: 14px;">${n(countriesRecovered)}</td>
+                                    <td class="text-center font-weight-bold" style="font-size: 14px;">${n(countriesDeaths)}</td>
                                 </tr>
                                 `;
 

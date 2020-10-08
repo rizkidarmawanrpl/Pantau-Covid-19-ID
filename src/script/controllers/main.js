@@ -71,7 +71,7 @@ const main = () => {
 
             // Grafik kasus covid 19 per bulan global
             // Create chart instance
-            var chartKasusCovidPerbulan = am4core.create("kasus_covid_perbulan", am4charts.XYChart);
+            const chartKasusCovidPerbulan = am4core.create("kasus_covid_perbulan", am4charts.XYChart);
             // Add data
             chartKasusCovidPerbulan.data = response.global;
             // Set input format for the dates
@@ -83,7 +83,7 @@ const main = () => {
             var series = chartKasusCovidPerbulan.series.push(new am4charts.LineSeries());
             series.dataFields.valueY = "value";
             series.dataFields.dateX = "date";
-            series.tooltipText = "{value}";
+            series.tooltipText = "{value} Orang";
             series.strokeWidth = 2;
             series.minBulletDistance = 15;
             // Drop-shaped tooltips
@@ -120,7 +120,7 @@ const main = () => {
 
             // Grafik kasus covid 19 per bulan di Indonesia
             // Create chart instance
-            var chartKasusCovidPerbulanIndonesia = am4core.create("kasus_covid_perbulan_indonesia", am4charts.XYChart);
+            const chartKasusCovidPerbulanIndonesia = am4core.create("kasus_covid_perbulan_indonesia", am4charts.XYChart);
             // Add data
             chartKasusCovidPerbulanIndonesia.data = response.indonesia;
             // Set input format for the dates
@@ -132,7 +132,7 @@ const main = () => {
             var series = chartKasusCovidPerbulanIndonesia.series.push(new am4charts.LineSeries());
             series.dataFields.valueY = "value";
             series.dataFields.dateX = "date";
-            series.tooltipText = "{value}";
+            series.tooltipText = "{value} Orang";
             series.strokeWidth = 2;
             series.minBulletDistance = 15;
             // Drop-shaped tooltips

@@ -57,10 +57,10 @@ class TentangCovid {
 
         const views = `
         <div class="row">
-            <div class="col">
+            <div class="col-md-6">
                 ${gejala}
             </div>
-            <div class="col">
+            <div class="col-md-6">
                 ${penularan}
             </div>
         </div>

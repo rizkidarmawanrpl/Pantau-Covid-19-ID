@@ -50,6 +50,10 @@ body {
     float: right;
 }
 
+.font-white {
+    color: white;
+}
+
 @media (min-width: 1024px) {
     menu-list {
         display: flex;
